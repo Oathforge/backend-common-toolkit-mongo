@@ -5,7 +5,7 @@
 ## What it includes
 
 - `BaseDocumentAudit`
-- `TimeOrderedUuidDocument`
+- `TimeOrderedUuid`
 - `MongoTimeOrderedUuidUtil`
 
 ## When to use it
@@ -29,7 +29,7 @@ Use this module if your service works with Spring Data MongoDB. If your project 
 public class UserDocument extends BaseDocumentAudit {
 
   @Id
-  @TimeOrderedUuidDocument
+  @TimeOrderedUuid
   private String id;
 
   private String email;

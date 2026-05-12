@@ -7,7 +7,7 @@ This module provides a shared foundation for MongoDB documents with auditing sup
 ## Components
 
 - `BaseDocumentAudit`
-- `TimeOrderedUuidDocument`
+- `TimeOrderedUuid`
 - `MongoTimeOrderedUuidUtil`
 
 ## BaseDocumentAudit
@@ -26,16 +26,16 @@ This module provides a shared foundation for MongoDB documents with auditing sup
 public class UserDocument extends BaseDocumentAudit {
 
   @Id
-  @TimeOrderedUuidDocument
+  @TimeOrderedUuid
   private String id;
 
   private String email;
 }
 ```
 
-## TimeOrderedUuidDocument
+## TimeOrderedUuid
 
-The `@TimeOrderedUuidDocument` annotation marks `String` fields that should receive a time-ordered UUID right before they are persisted for the first time.
+The `@TimeOrderedUuid` annotation marks `String` fields that should receive a time-ordered UUID right before they are persisted for the first time.
 
 You do not need to call any generator manually. `MongoTimeOrderedUuidUtil` listens to the `BeforeConvertEvent` and fills the field when the value is empty.
 
