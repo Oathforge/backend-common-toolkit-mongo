@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 
-import com.backendtoolkit.common.mongo.annotation.idgenerator.TimeOrderedUuidDocument;
+import com.backendtoolkit.common.mongo.annotation.idgenerator.TimeOrderedUuid;
 import com.github.f4b6a3.uuid.UuidCreator;
 
 @Component
@@ -33,7 +33,7 @@ public class MongoTimeOrderedUuidUtil extends AbstractMongoEventListener<Object>
 		PersistentPropertyAccessor<Object> accessor = persistentEntity.getPropertyAccessor(entity);
 
 		persistentEntity.doWithProperties((MongoPersistentProperty property) -> {
-			if (!property.isAnnotationPresent(TimeOrderedUuidDocument.class)) {
+			if (!property.isAnnotationPresent(TimeOrderedUuid.class)) {
 				return;
 			}
 
