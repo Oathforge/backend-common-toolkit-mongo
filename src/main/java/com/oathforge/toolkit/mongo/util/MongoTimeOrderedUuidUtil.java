@@ -1,4 +1,4 @@
-package com.backendtoolkit.common.mongo.util;
+package com.oathforge.toolkit.mongo.util;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.mapping.PersistentPropertyAccessor;
@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 
-import com.backendtoolkit.common.mongo.annotation.idgenerator.TimeOrderedUuid;
+import com.oathforge.toolkit.mongo.annotation.idgenerator.TimeOrderedUuid;
 import com.github.f4b6a3.uuid.UuidCreator;
 
 @Component
