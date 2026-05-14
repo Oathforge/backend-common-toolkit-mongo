@@ -1,4 +1,4 @@
-package com.oathforge.toolkit.mongo.model;
+package org.oathforge.toolkit.mongo.model;
 
 import java.time.LocalDateTime;
 
