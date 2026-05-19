@@ -1,4 +1,4 @@
-package com.backendtoolkit.common.mongo.annotation.idgenerator;
+package org.oathforge.toolkit.mongo.annotation.idgenerator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

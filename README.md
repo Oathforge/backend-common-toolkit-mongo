@@ -16,7 +16,7 @@ Use this module if your service works with Spring Data MongoDB. If your project 
 
 ```xml
 <dependency>
-  <groupId>io.backendtoolkit</groupId>
+  <groupId>org.oathforge</groupId>
   <artifactId>backend-common-toolkit-mongo</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 </dependency>
