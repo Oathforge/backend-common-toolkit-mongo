@@ -21,6 +21,8 @@ This module provides a shared foundation for MongoDB documents with auditing sup
 
 ## Audited document example
 
+`@Id` is still required. `@TimeOrderedUuid` only marks the field for automatic ID assignment before persistence.
+
 ```java
 @Document(collection = "users")
 public class UserDocument extends BaseDocumentAudit {
