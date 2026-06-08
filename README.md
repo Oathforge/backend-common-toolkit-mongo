@@ -50,6 +50,49 @@ public class UserDocument extends BaseDocumentAudit {
 }
 ```
 
+## Auditing activation
+
+`BaseDocumentAudit` defines the audit fields and Spring Data annotations, but each Mongo service must still enable Spring Data Mongo auditing in its own application context.
+
+At minimum, the service must declare `@EnableMongoAuditing`.
+
+If the service wants Spring to populate `createdBy` and `modifiedBy`, it must also provide an `AuditorAware<?>` bean that resolves the current user from the authentication mechanism used by that service.
+
+Typical approach:
+
+- read the current user from the Spring Security context, or replace that part with the service's own user-resolution mechanism
+- if the operation can run without an authenticated user, optionally return a default value such as `"system"`
+
+The bean name is not fixed. It only has to match the value used in `auditorAwareRef`.
+
+The example below uses `SecurityContextHolder` because it is the most common Spring setup, but that part can be replaced with any project-specific way of obtaining the current user.
+
+Example:
+
+```java
+@Configuration
+@EnableMongoAuditing(auditorAwareRef = "auditorProvider")
+public class MongoAuditingConfiguration {
+
+  @Bean
+  AuditorAware<String> auditorProvider() {
+    return () -> {
+      try {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+          return Optional.of("system");
+        }
+        return Optional.ofNullable(authentication.getName()).or(() -> Optional.of("system"));
+      } catch (Exception e) {
+        return Optional.of("system");
+      }
+    };
+  }
+}
+```
+
+Without this configuration, extending `BaseDocumentAudit` is not enough to make Mongo auditing run.
+
 ## Detailed documentation
 
 - [Mongo base persistence](docs/persistence.md)
