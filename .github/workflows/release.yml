@@ -225,8 +225,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh api \
+          if ! gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             "/repos/${{ github.repository }}/pulls/${{ steps.create-pr.outputs.number }}/requested_reviewers" \
-            -f team_reviewers[]='backend-reviewers'
+            -f team_reviewers[]='backend-reviewers'; then
+            echo "::warning::Could not request review from team 'backend-reviewers'. Verify that the team has access to ${{ github.repository }}."
+          fi

@@ -19,6 +19,48 @@ This module provides a shared foundation for MongoDB documents with auditing sup
 - `createdBy`: user or process that created the document
 - `modifiedBy`: user or process that performed the last modification
 
+`BaseDocumentAudit` only provides the mapped fields and Spring Data auditing annotations. Each Mongo service must still enable auditing in its own Spring configuration.
+
+Required baseline:
+- `@EnableMongoAuditing`
+
+Required for `createdBy` and `modifiedBy` population:
+- an `AuditorAware<?>` bean that resolves the current user according to the service's authentication setup
+
+Recommended approach:
+- read the current user from the Spring Security context, or replace that part with the security abstraction already used by the service
+- if some writes can happen without an authenticated user, optionally return a default value such as `"system"`
+
+The bean name is arbitrary. It only needs to match `auditorAwareRef`.
+
+The example below uses `SecurityContextHolder` because it is the most common Spring setup, but that part can be replaced with any project-specific way of obtaining the current user.
+
+Example:
+
+```java
+@Configuration
+@EnableMongoAuditing(auditorAwareRef = "auditorProvider")
+public class MongoAuditingConfiguration {
+
+  @Bean
+  AuditorAware<String> auditorProvider() {
+    return () -> {
+      try {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+          return Optional.of("system");
+        }
+        return Optional.ofNullable(authentication.getName()).or(() -> Optional.of("system"));
+      } catch (Exception e) {
+        return Optional.of("system");
+      }
+    };
+  }
+}
+```
+
+Without that service-level configuration, Spring Data Mongo auditing will not populate the audit fields automatically.
+
 ## Audited document example
 
 `@Id` is still required. `@TimeOrderedUuid` only marks the field for automatic ID assignment before persistence.
