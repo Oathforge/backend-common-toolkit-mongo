@@ -67,7 +67,7 @@
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
 		<gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
-		<backend-common-toolkit.version>1.0.1</backend-common-toolkit.version>
+		<backend-common-toolkit.version>1.1.0</backend-common-toolkit.version>
 	</properties>
 
 	<dependencyManagement>

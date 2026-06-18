@@ -24,7 +24,7 @@ Use this module if your service works with Spring Data MongoDB. If your project 
 <dependency>
   <groupId>io.github.oathforge</groupId>
   <artifactId>backend-common-toolkit-mongo</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
